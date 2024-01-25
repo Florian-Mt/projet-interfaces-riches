@@ -1,26 +1,26 @@
-type Film = {
+export type Film = {
 	file_url: string
 	title: string
 	synopsis_url: string
 }
 
-type Chapter = {
+export type Chapter = {
 	pos: string // Should be a number
 	title: string
 }
 
-type Chapters = Array<Chapter>
+export type Chapters = Array<Chapter>
 
-type Waypoint = {
+export type Waypoint = {
 	lat: string
 	lng: string
 	label: string
 	timestamp: string // Should be a number
 }
 
-type Waypoints = Array<Waypoint>
+export type Waypoints = Array<Waypoint>
 
-type Keyword = {
+export type Keyword = {
 	pos: string // Should be a number
 	data: Array<{
 		title: string
@@ -28,9 +28,9 @@ type Keyword = {
 	}>
 }
 
-type Keywords = Array<Keyword>
+export type Keywords = Array<Keyword>
 
-type JsonApiResponse = {
+export type JsonApiResponse = {
 	Film: Film
 	Chapters: Chapters
 	Waypoints: Waypoints
