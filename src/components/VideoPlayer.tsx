@@ -9,7 +9,7 @@ type VideoPlayerProps = {
 	updateCurrentChapter: (currentTime: number) => void
 }
 
-const VideoPlayer = function({className, sourceUrl, updateCurrentChapter}: VideoPlayerProps, ref: ForwardedRef<HTMLVideoElement | null>) {
+const VideoPlayer = ({className, sourceUrl, updateCurrentChapter}: VideoPlayerProps, ref: ForwardedRef<HTMLVideoElement | null>) => {
 	const handleTimeChange = (event: SyntheticEvent<HTMLVideoElement>) => {
 		updateCurrentChapter(Math.floor((event.target as HTMLVideoElement).currentTime))
 	}

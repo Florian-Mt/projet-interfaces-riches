@@ -1,4 +1,3 @@
-import { FC } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons"
 
@@ -9,7 +8,7 @@ type BannerProps = {
 	synopsisUrl: Film["synopsis_url"]
 }
 
-const Banner: FC<BannerProps> = function({title, synopsisUrl}) {
+const Banner = ({title, synopsisUrl}: BannerProps) => {
 	return <header className="flex justify-between items-center mx-4 p-4 border-b border-neutral-300">
 		<h1 className="text-xl font-bold">
 			{title}

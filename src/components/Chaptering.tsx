@@ -1,4 +1,3 @@
-import { FC } from "react"
 import classnames from "classnames"
 
 import { Chapter } from "@/signatures.ts"
@@ -10,7 +9,7 @@ type ChapteringProps = {
 	playChapter: (chapter: number) => void
 }
 
-const Chaptering: FC<ChapteringProps> = function({chapters, currentChapter, playChapter}) {
+const Chaptering = ({chapters, currentChapter, playChapter}: ChapteringProps) => {
 	return <nav className="flex flex-col gap-1">
 		{chapters.map((chapter, key) => {
 			return <h2 key={chapter.pos} className={classnames({"font-bold": key === currentChapter})} onClick={() => playChapter(key)}>
