@@ -6,12 +6,12 @@ import { Film } from "@/signatures.ts"
 type VideoPlayerProps = {
 	className: string
 	sourceUrl: Film["file_url"]
-	updateCurrentChapter: (currentTime: number) => void
+	updateTime: (currentTime: number) => void
 }
 
-const VideoPlayer = ({className, sourceUrl, updateCurrentChapter}: VideoPlayerProps, ref: ForwardedRef<HTMLVideoElement | null>) => {
+const VideoPlayer = ({className, sourceUrl, updateTime}: VideoPlayerProps, ref: ForwardedRef<HTMLVideoElement | null>) => {
 	const handleTimeChange = (event: SyntheticEvent<HTMLVideoElement>) => {
-		updateCurrentChapter(Math.floor((event.target as HTMLVideoElement).currentTime))
+		updateTime(Math.floor((event.target as HTMLVideoElement).currentTime))
 	}
 
 	return <div className={classNames(className, "flex justify-center h-full")}>

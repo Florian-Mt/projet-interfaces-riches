@@ -9,6 +9,7 @@ import Loader from "@/components/Loader.tsx"
 import Chaptering from "@/components/Chaptering.tsx"
 //import Chatroom from "@/components/Chatroom.tsx"
 import VideoPlayer from "@/components/VideoPlayer.tsx"
+import getChapterDuration from "@/functions/getChapterDuration"
 
 function App() {
   const [film, setFilm] = useState<Film | null>(null)
@@ -17,6 +18,8 @@ function App() {
   const [keywords, setKeywords] = useState<Keywords | null>(null)
 
   const [currentChapter, setCurrentChapter] = useState<number | null>(null)
+  const [currentChapterDuration, setCurrentChapterDuration] = useState<number | null>(null)
+  const [currentChapterProgress, setCurrentChapterProgress] = useState<number | null>(null)
 
   const videoPlayer = useRef<HTMLVideoElement | null>(null)
 
@@ -38,14 +41,17 @@ function App() {
     }
   }
 
-  const updateCurrentChapter = (currentTime: number) => {
+  const updateTime = (currentTime: number) => {
     // Find the corresponding chapter
     let currentChapter = chapters!.length - 1
     while (currentTime < Number(chapters![currentChapter].pos)) {
       currentChapter -= 1
     }
 
+    // Update current chapter
     setCurrentChapter(currentChapter)
+    setCurrentChapterDuration(getChapterDuration(chapters!, currentChapter!, videoPlayer.current!.duration))
+    setCurrentChapterProgress(videoPlayer.current!.currentTime - Number(chapters![currentChapter!].pos))
   }
 
   const content = (film === null)
@@ -54,10 +60,15 @@ function App() {
       <Banner title={film.title} synopsisUrl={film.synopsis_url} />
 
       <main className="flex-grow flex justify-center items-start px-8 py-4">
-        <VideoPlayer className="flex-grow p-2" sourceUrl={film.file_url} updateCurrentChapter={updateCurrentChapter} ref={videoPlayer} />
+        <VideoPlayer className="flex-grow p-2" sourceUrl={film.file_url} updateTime={updateTime} ref={videoPlayer} />
 
         <div className="flex flex-col gap-4 ml-2 px-4 py-2 border-l border-neutral-300">
-          <Chaptering chapters={chapters!} currentChapter={currentChapter} playChapter={playChapter} />
+          <Chaptering
+            chapters={chapters!}
+            currentChapter={currentChapter}
+            currentChapterDuration={currentChapterDuration!}
+            currentChapterProgress={currentChapterProgress!}
+            playChapter={playChapter} />
 
           <button className="flex justify-center items-center gap-2 text-md button mb-2">
             <FontAwesomeIcon icon={faMap} />
