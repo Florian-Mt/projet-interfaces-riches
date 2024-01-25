@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMap } from "@fortawesome/free-solid-svg-icons"
 
-import { JSON_API_URL } from "./constants.ts"
-import { Chapters, Film, JsonApiResponse, Keywords, Waypoints } from "./signatures.ts"
-import Banner from "./components/Banner.tsx"
-import Loader from "./components/Loader.tsx"
-import Chaptering from "./components/Chaptering.tsx"
-//import Chatroom from "./components/Chatroom.tsx"
-import VideoPlayer from "./components/VideoPlayer.tsx"
+import { JSON_API_URL } from "@/constants.ts"
+import { Chapters, Film, JsonApiResponse, Keywords, Waypoints } from "@/signatures.ts"
+import Banner from "@/components/Banner.tsx"
+import Loader from "@/components/Loader.tsx"
+import Chaptering from "@/components/Chaptering.tsx"
+//import Chatroom from "@/components/Chatroom.tsx"
+import VideoPlayer from "@/components/VideoPlayer.tsx"
 
 function App() {
   const [film, setFilm] = useState<Film | null>(null)

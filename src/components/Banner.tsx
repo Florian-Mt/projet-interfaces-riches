@@ -2,7 +2,7 @@ import { FC } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons"
 
-import { Film } from "../signatures.ts"
+import { Film } from "@/signatures.ts"
 
 type BannerProps = {
 	title: Film["title"]

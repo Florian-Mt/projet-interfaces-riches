@@ -1,8 +1,8 @@
 import { FC } from "react"
 import classnames from "classnames"
 
-import { Chapter } from "../signatures.ts"
-import { formatTime } from "../functions/formatTime.ts"
+import { Chapter } from "@/signatures.ts"
+import { formatTime } from "@/functions/formatTime.ts"
 
 type ChapteringProps = {
 	chapters: Array<Chapter>

@@ -1,7 +1,7 @@
 import { forwardRef, ForwardedRef, SyntheticEvent } from "react"
 import classNames from "classnames"
 
-import { Film } from "../signatures.ts"
+import { Film } from "@/signatures.ts"
 
 type VideoPlayerProps = {
 	className: string
