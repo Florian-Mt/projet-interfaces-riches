@@ -9,12 +9,19 @@ import Loader from "./components/Loader.tsx"
 import Chaptering from "./components/Chaptering.tsx"
 //import Chatroom from "./components/Chatroom.tsx"
 import VideoPlayer from "./components/VideoPlayer.tsx"
+import Map from "./components/Map.tsx"
 
 function App() {
   const [film, setFilm] = useState<Film | null>(null)
   const [chapters, setChapters] = useState<Chapters | null>(null)
   const [waypoints, setWaypoints] = useState<Waypoints | null>(null)
   const [keywords, setKeywords] = useState<Keywords | null>(null)
+  const mapLocation = {
+    lat: 51.505, // Remplacez ces coordonnées par celles de votre emplacement
+    lon: -0.09,
+    name: 'Emplacement de la carte',
+  };
+
 
   useEffect(() => {
     fetch(JSON_API_URL)
@@ -42,6 +49,7 @@ function App() {
             <FontAwesomeIcon icon={faMap} />
             Ouvrir la carte
           </button>
+          <Map mapLocation={mapLocation} />
         </div>
       </main>
     </>
