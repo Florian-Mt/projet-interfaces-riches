@@ -5,9 +5,10 @@ import { faMap } from "@fortawesome/free-solid-svg-icons"
 import { JSON_API_URL } from "@/constants.ts"
 import { Chapters, Film, JsonApiResponse, Keywords, Waypoints } from "@/signatures.ts"
 import Banner from "@/components/Banner.tsx"
-import Loader from "@/components/Loader.tsx"
 import Chaptering from "@/components/Chaptering.tsx"
+import Loader from "@/components/Loader.tsx"
 //import Chatroom from "@/components/Chatroom.tsx"
+import UiError from "@/components/UiError"
 import VideoPlayer from "@/components/VideoPlayer.tsx"
 import findCorrespondingChapter from "@/functions/findCorrespondingChapter"
 import getChapterDuration from "@/functions/getChapterDuration"
@@ -17,6 +18,7 @@ function App() {
   const [chapters, setChapters] = useState<Chapters | null>(null)
   const [waypoints, setWaypoints] = useState<Waypoints | null>(null)
   const [keywords, setKeywords] = useState<Keywords | null>(null)
+  const [apiError, setApiError] = useState<string | null>(null)
 
   const [currentChapter, setCurrentChapter] = useState<number | null>(null)
   const [currentChapterDuration, setCurrentChapterDuration] = useState<number | null>(null)
@@ -26,12 +28,29 @@ function App() {
 
   useEffect(() => {
     fetch(JSON_API_URL)
-      .then((response) => response.json())
+      .then(async (response) => {
+        if (! response.ok) {
+          const errorMessage = response.status === 429
+            ? "Vous avez effectué trop de requêtes. Veuillez réessayez dans un instant."
+            : "Une erreur inattendue est survenue."
+
+          throw new Error(errorMessage)
+        }
+
+        return response.json()
+      })
       .then((apiData: JsonApiResponse) => {
-        setFilm(apiData.Film)
-        setChapters(apiData.Chapters)
-        setWaypoints(apiData.Waypoints)
-        setKeywords(apiData.Keywords)
+        try {
+          setFilm(apiData.Film)
+          setChapters(apiData.Chapters)
+          setWaypoints(apiData.Waypoints)
+          setKeywords(apiData.Keywords)
+        }
+        catch (error) {
+          setApiError("Le serveur a fourni une réponse malformée.")
+        }
+      }, (error) => {
+        setApiError(error.message)
       })
   }, [])
 
@@ -57,11 +76,19 @@ function App() {
     setCurrentChapterProgress(videoPlayer.current!.currentTime - Number(chapters![currentChapter!].pos))
   }
 
-  const content = (film === null)
-    ? <Loader />
-    : <>
-      <Banner title={film.title} synopsisUrl={film.synopsis_url} />
+  let content
 
+  if (apiError) {
+    content = <UiError reason={apiError} />
+  }
+
+  else if (film === null) {
+    content = <Loader />
+  }
+
+  else {
+    content = <>
+      <Banner title={film.title} synopsisUrl={film.synopsis_url} />
       <main className="flex-grow flex justify-center items-start px-8 py-4">
         <VideoPlayer className="flex-grow p-2" sourceUrl={film.file_url} updateTime={updateTime} ref={videoPlayer} />
 
@@ -80,6 +107,7 @@ function App() {
         </div>
       </main>
     </>
+  }
 
   return (
 		<div className="min-h-screen h-screen flex flex-col">
