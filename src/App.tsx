@@ -9,6 +9,7 @@ import Loader from "@/components/Loader.tsx"
 import Chaptering from "@/components/Chaptering.tsx"
 //import Chatroom from "@/components/Chatroom.tsx"
 import VideoPlayer from "@/components/VideoPlayer.tsx"
+import findCorrespondingChapter from "@/functions/findCorrespondingChapter"
 import getChapterDuration from "@/functions/getChapterDuration"
 
 function App() {
@@ -34,19 +35,21 @@ function App() {
       })
   }, [])
 
-  const playChapter = (chapter: number) => {
+  const changeTimePosition = (timePosition: number, continuePlaying: boolean = false) => {
+    const chapter = findCorrespondingChapter(chapters!, timePosition)
+
     setCurrentChapter(chapter)
     if (currentChapter !== null) {
-      videoPlayer.current!.currentTime = Number(chapters![chapter].pos)
+      videoPlayer.current!.currentTime = timePosition
+
+      if (continuePlaying) {
+        videoPlayer.current!.play()
+      }
     }
   }
 
   const updateTime = (currentTime: number) => {
-    // Find the corresponding chapter
-    let currentChapter = chapters!.length - 1
-    while (currentTime < Number(chapters![currentChapter].pos)) {
-      currentChapter -= 1
-    }
+    const currentChapter = findCorrespondingChapter(chapters!, currentTime)
 
     // Update current chapter
     setCurrentChapter(currentChapter)
@@ -68,7 +71,7 @@ function App() {
             currentChapter={currentChapter}
             currentChapterDuration={currentChapterDuration!}
             currentChapterProgress={currentChapterProgress!}
-            playChapter={playChapter} />
+            changeTimePosition={changeTimePosition} />
 
           <button className="flex justify-center items-center gap-2 text-md button mb-2">
             <FontAwesomeIcon icon={faMap} />
