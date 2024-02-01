@@ -2,9 +2,9 @@ import {
 	MINUTES_PER_HOUR,
 	SECONDS_PER_HOUR,
 	SECONDS_PER_MINUTE,
-} from "../constants.ts"
+} from "@/constants.ts"
 
-export function formatTime(duration: number, withoutZero: boolean = false): string {
+const formatTime = (duration: number, withoutZero: boolean = false): string => {
 	if (isNaN(duration) || (withoutZero && duration === 0))
 		return "--:--"
 
@@ -19,3 +19,4 @@ export function formatTime(duration: number, withoutZero: boolean = false): stri
 	return hours !== "0" ? `${hours}:${shortTimeFormat}` : shortTimeFormat
 }
 
+export default formatTime
