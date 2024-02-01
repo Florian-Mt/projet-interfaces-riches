@@ -1,11 +1,11 @@
 import { Chapter } from "@/signatures"
 
-const getChapterDuration = (chapters: Array<Chapter>, chapter: number, totalDuration: number) => {
+const getChapterDuration = (chapters: Array<Chapter>, chapter: number, totalDuration: number): number => {
 	if (chapter < 0 || chapter >= chapters.length) {
 		throw new RangeError("Invalid value: this chapter does not exist.")
 	}
 
-	if (chapter - 1 == chapters.length) {
+	if (chapter == chapters.length - 1) {
 		return totalDuration - Number(chapters[chapter].pos)
 	}
 
