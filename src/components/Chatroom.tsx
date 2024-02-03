@@ -55,7 +55,7 @@ const Chatroom = ({}: ChatroomProps) => {
 					<ChatMessage submitMessage={submitMessage} />
 				</>
 				: <div className="grow flex justify-center items-center">
-					<Loader />
+					<Loader iconSize="4x" />
 				</div>
 		}
 	</div>

@@ -84,7 +84,9 @@ function App() {
 	}
 
 	else if (film === null) {
-		content = <Loader />
+		content = <Loader iconSize="6x">
+			<span className="text-2xl text-semibold">Chargement en cours…</span>
+		</Loader>
 	}
 
 	else {
