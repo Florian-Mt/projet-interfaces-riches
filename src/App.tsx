@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMap } from "@fortawesome/free-solid-svg-icons"
 
@@ -6,8 +7,8 @@ import { JSON_API_URL } from "@/constants.ts"
 import { Chapters, Film, JsonApiResponse, Keywords, Waypoints } from "@/signatures.ts"
 import Banner from "@/components/Banner.tsx"
 import Chaptering from "@/components/Chaptering.tsx"
+import Chatroom from "@/components/Chatroom.tsx"
 import Loader from "@/components/Loader.tsx"
-//import Chatroom from "@/components/Chatroom.tsx"
 import UiError from "@/components/UiError"
 import VideoPlayer from "@/components/VideoPlayer.tsx"
 import findCorrespondingChapter from "@/functions/findCorrespondingChapter"
@@ -92,13 +93,30 @@ function App() {
 			<main className="flex-grow flex justify-center items-start px-8 py-4">
 				<VideoPlayer className="flex-grow p-2" sourceUrl={film.file_url} updateTime={updateTime} ref={videoPlayer} />
 
-				<div className="flex flex-col gap-4 ml-2 px-4 py-2 border-l border-neutral-300">
-					<Chaptering
-						chapters={chapters!}
-						currentChapter={currentChapter}
-						currentChapterDuration={currentChapterDuration!}
-						currentChapterProgress={currentChapterProgress!}
-						changeTimePosition={changeTimePosition} />
+				<div className="flex flex-col h-full gap-2 ml-2 px-4 py-2 border-l border-neutral-300">
+					<Tabs>
+						<TabList>
+							<Tab>
+								Chaptering
+							</Tab>
+							<Tab>
+								Chatroom
+							</Tab>
+						</TabList>
+
+						<TabPanel>
+							<Chaptering
+								chapters={chapters!}
+								currentChapter={currentChapter}
+								currentChapterDuration={currentChapterDuration!}
+								currentChapterProgress={currentChapterProgress!}
+								changeTimePosition={changeTimePosition} />
+						</TabPanel>
+
+						<TabPanel>
+							<Chatroom />
+						</TabPanel>
+					</Tabs>
 
 					<button className="flex justify-center items-center gap-2 text-md button mb-2">
 						<FontAwesomeIcon icon={faMap} />

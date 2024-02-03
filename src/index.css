@@ -12,7 +12,32 @@ body {
 	@apply min-w-[320px] text-neutral-900 bg-neutral-50 dark:text-neutral-50 dark:bg-neutral-900;
 }
 
-.anchor {
+.react-tabs {
+	@apply contents;
+}
+
+.react-tabs__tab-list {
+	@apply flex flex-wrap p-1 gap-y-2 border-b border-neutral-300;
+}
+
+.react-tabs__tab {
+	@apply grow block text-center p-2 border-r last:border-r-0 border-neutral-300;
+}
+
+.react-tabs__tab--selected {
+	@apply font-bold;
+}
+
+.react-tabs__tab-panel {
+	@apply hidden;
+}
+
+.react-tabs__tab-panel--selected {
+	@apply contents;
+}
+
+.anchor,
+.react-tabs__tab {
 	@apply text-blue-600 dark:text-blue-500 hover:underline focus:outline-none focus-visible:ring cursor-pointer active:text-blue-900 dark:active:text-blue-200 visited:text-purple-600 dark:visited:text-purple-500;
 }
 

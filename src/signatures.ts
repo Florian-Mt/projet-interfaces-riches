@@ -36,3 +36,11 @@ export type JsonApiResponse = {
 	Waypoints: Waypoints
 	Keywords: Keywords
 }
+
+export type Message = {
+	message: string
+	name: string
+	when: number
+}
+
+export type SocketApiResponse = Array<Message>
