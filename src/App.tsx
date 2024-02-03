@@ -11,6 +11,7 @@ import Chatroom from "@/components/Chatroom.tsx"
 import Loader from "@/components/Loader.tsx"
 import UiError from "@/components/UiError"
 import VideoPlayer from "@/components/VideoPlayer.tsx"
+import clamp from "./functions/clamp"
 import findCorrespondingChapter from "@/functions/findCorrespondingChapter"
 import getChapterDuration from "@/functions/getChapterDuration"
 
@@ -57,8 +58,12 @@ function App() {
 
 	const changeTimePosition = (timePosition: number, continuePlaying: boolean = false) => {
 		const chapter = findCorrespondingChapter(chapters!, timePosition)
+		const chapterStart = Number(chapters![chapter!].pos)
+		const chapterDuration = getChapterDuration(chapters!, chapter, videoPlayer.current!.duration)
 
 		setCurrentChapter(chapter)
+		setCurrentChapterProgress(clamp(0, timePosition - chapterStart, chapterDuration))
+
 		if (currentChapter !== null) {
 			videoPlayer.current!.currentTime = timePosition
 
