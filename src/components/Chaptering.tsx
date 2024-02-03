@@ -37,9 +37,9 @@ const Chaptering = ({chapters, currentChapter, currentChapterDuration, currentCh
 	return <nav className="flex flex-col gap-1">
 		{chapters.map((chapter, key) => {
 			return <h2 key={chapter.pos} className={classnames("flex flex-col", {"font-bold": key === currentChapter})}>
-				<a className="anchor" onClick={() => changeTimePosition(Number(chapters[key].pos))}>
+				<button className="anchor text-left" onClick={() => changeTimePosition(Number(chapters[key].pos))}>
 					{formatTime(Number(chapter.pos))} {chapter.title}
-				</a>
+				</button>
 				{
 					key === currentChapter
 					? <progress
