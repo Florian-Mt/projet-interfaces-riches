@@ -7,6 +7,7 @@ import Banner from "@/components/Banner.tsx"
 import Chaptering from "@/components/Chaptering.tsx"
 import Chatroom from "@/components/Chatroom.tsx"
 import Loader from "@/components/Loader.tsx"
+import Map from "@/components/Map.tsx"
 import UiError from "@/components/UiError"
 import VideoPlayer from "@/components/VideoPlayer.tsx"
 import clamp from "./functions/clamp"
@@ -25,6 +26,11 @@ function App() {
 	const [currentChapterProgress, setCurrentChapterProgress] = useState<number | null>(null)
 
 	const videoPlayer = useRef<HTMLVideoElement | null>(null)
+	const mapLocation = {
+		lat: 51.505, // Remplacez ces coordonnées par celles de votre emplacement
+		lon: -0.09,
+		name: "Emplacement de la carte",
+	}
 
 	useEffect(() => {
 		fetch(JSON_API_URL)
@@ -124,6 +130,8 @@ function App() {
 							<Chatroom className="p-2" />
 						</TabPanel>
 					</Tabs>
+
+					<Map mapLocation={mapLocation} />
 				</div>
 			</main>
 		</>
