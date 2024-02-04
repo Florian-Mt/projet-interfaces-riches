@@ -1,3 +1,4 @@
+import classNames from "classnames"
 import { useEffect, useState } from "react"
 
 import { WEBSOCKET_API_URL } from "@/constants"
@@ -7,9 +8,10 @@ import ChatMessage from "@/components/ChatMessage.tsx"
 import Loader from "@/components/Loader.tsx"
 
 type ChatroomProps = {
+	className?: string
 }
 
-const Chatroom = ({}: ChatroomProps) => {
+const Chatroom = ({className}: ChatroomProps) => {
 	const [socket, setSocket] = useState<WebSocket | null>(null)
 	const [connected, setConnected] = useState<boolean>(false)
 	const [messages, setMessages] = useState<Array<Message>>([])
@@ -47,11 +49,11 @@ const Chatroom = ({}: ChatroomProps) => {
 		socket!.send(JSON.stringify(message))
 	}
 
-	return <div className="grow flex flex-col gap-4">
+	return <div className={classNames(className, "overflow-hidden grow flex flex-col gap-4")}>
 		{
 		connected
 				? <>
-					<ChatHistory messages={messages} />
+					<ChatHistory className="overflow-auto" messages={messages} />
 					<ChatMessage submitMessage={submitMessage} />
 				</>
 				: <div className="grow flex justify-center items-center">

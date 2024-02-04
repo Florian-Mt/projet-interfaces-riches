@@ -1,10 +1,11 @@
-import classnames from "classnames"
+import classNames from "classnames"
 import { useRef, useState, MouseEvent as ReactMouseEvent } from "react"
 
 import { Chapter } from "@/signatures.ts"
 import formatTime from "@/functions/formatTime.ts"
 
 type ChapteringProps = {
+	className?: string
 	chapters: Array<Chapter>
 	currentChapter: number | null
 	currentChapterDuration: number | null
@@ -12,7 +13,7 @@ type ChapteringProps = {
 	changeTimePosition: (chapter: number) => void
 }
 
-const Chaptering = ({chapters, currentChapter, currentChapterDuration, currentChapterProgress, changeTimePosition}: ChapteringProps) => {
+const Chaptering = ({className, chapters, currentChapter, currentChapterDuration, currentChapterProgress, changeTimePosition}: ChapteringProps) => {
 	const [isDraggingProgressBar, setIsDraggingProgressBar] = useState<boolean>(false)
 	const progressBar = useRef<HTMLProgressElement | null>(null)
 
@@ -34,9 +35,9 @@ const Chaptering = ({chapters, currentChapter, currentChapterDuration, currentCh
 		document.removeEventListener("mouseup", removeProgressBarEventListeners)
 	}
 
-	return <nav className="flex flex-col gap-1">
+	return <nav className={classNames(className, "flex flex-col gap-1")}>
 		{chapters.map((chapter, key) => {
-			return <h2 key={chapter.pos} className={classnames("flex flex-col", {"font-bold": key === currentChapter})}>
+			return <h2 key={chapter.pos} className={classNames("flex flex-col", {"font-bold": key === currentChapter})}>
 				<button className="anchor text-left" onClick={() => changeTimePosition(Number(chapters[key].pos))}>
 					{formatTime(Number(chapter.pos))} {chapter.title}
 				</button>
@@ -45,7 +46,7 @@ const Chaptering = ({chapters, currentChapter, currentChapterDuration, currentCh
 					? <progress
 						value={currentChapterProgress!}
 						max={currentChapterDuration!}
-						className={classnames("hover:h-3 mb-2 cursor-pointer rounded-sm transition-all ease-in-out", {"h-1": ! isDraggingProgressBar, "h-3": isDraggingProgressBar})}
+						className={classNames("hover:h-3 mb-2 cursor-pointer rounded-sm transition-all ease-in-out", {"h-1": ! isDraggingProgressBar, "h-3": isDraggingProgressBar})}
 						onClick={jumpToPosition}
 						onMouseDown={addProgressBarEventListeners}
 						ref={progressBar} />

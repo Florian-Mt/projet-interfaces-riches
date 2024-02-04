@@ -8,7 +8,7 @@ type LoaderProps = {
 }
 
 const Loader = ({iconSize = "6x", children}: PropsWithChildren<LoaderProps>) => {
-	return <div className="flex-grow flex flex-col gap-4 justify-center items-center">
+	return <div className="grow flex flex-col gap-4 justify-center items-center">
 		<FontAwesomeIcon icon={faSpinner} size={iconSize} spinPulse={true} className="text-neutral-300" />
 		{children}
 	</div>

@@ -1,11 +1,14 @@
+import classNames from "classnames"
+
 import { SocketApiResponse } from "@/signatures"
 
 type ChatHistoryProps = {
+	className?: string
 	messages: SocketApiResponse
 }
 
-const ChatHistory = ({messages}: ChatHistoryProps) => {
-	return <div className="flex flex-col">
+const ChatHistory = ({className, messages}: ChatHistoryProps) => {
+	return <div className={classNames(className, "flex flex-col")}>
 		{messages.map((message, i) => {
 			const messageTime = new Date(message.when)
 

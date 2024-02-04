@@ -1,10 +1,12 @@
+import classNames from "classnames"
 import { useState, FormEvent } from "react"
 
 type ChatMessage = {
+	className?: string
 	submitMessage: (name: string, content: string) => void
 }
 
-const ChatMessage = ({submitMessage}: ChatMessage) => {
+const ChatMessage = ({className, submitMessage}: ChatMessage) => {
 	const [userName, setUserName] = useState<string>("")
 	const [message, setMessage] = useState<string>("")
 
@@ -17,7 +19,7 @@ const ChatMessage = ({submitMessage}: ChatMessage) => {
 		setMessage("")
 	}
 
-	return <form action="#" className="flex flex-col gap-2 py-2 border-t border-neutral-300" onSubmit={handleSubmission}>
+	return <form action="#" className={classNames(className, "flex flex-col gap-2 py-2 border-t border-neutral-300")} onSubmit={handleSubmission}>
 		<div className="flex flex-col gap-1">
 			<label htmlFor="userName">Nom</label>
 			<input

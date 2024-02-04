@@ -4,7 +4,7 @@ import classNames from "classnames"
 import { Film } from "@/signatures.ts"
 
 type VideoPlayerProps = {
-	className: string
+	className?: string
 	sourceUrl: Film["file_url"]
 	updateTime: (currentTime: number) => void
 }
@@ -14,8 +14,8 @@ const VideoPlayer = ({className, sourceUrl, updateTime}: VideoPlayerProps, ref: 
 		updateTime(Math.floor((event.target as HTMLVideoElement).currentTime))
 	}
 
-	return <div className={classNames(className, "flex justify-center h-full")}>
-		<div className="flex-grow flex flex-col h-full bg-black">
+	return <div className={classNames(className, "flex justify-center aspect-video md:aspect-auto")}>
+		<div className="grow flex flex-col bg-black">
 			<video
 				className="h-full"
 				src={sourceUrl}

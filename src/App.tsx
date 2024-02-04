@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react"
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faMap } from "@fortawesome/free-solid-svg-icons"
 
 import { JSON_API_URL } from "@/constants.ts"
 import { Chapters, Film, JsonApiResponse, Keywords, Waypoints } from "@/signatures.ts"
@@ -96,23 +94,25 @@ function App() {
 
 	else {
 		content = <>
-			<Banner title={film.title} synopsisUrl={film.synopsis_url} />
-			<main className="flex-grow flex justify-center items-start px-8 py-4">
-				<VideoPlayer className="flex-grow p-2" sourceUrl={film.file_url} updateTime={updateTime} ref={videoPlayer} />
+			<Banner className="mx-4 px-2 py-3 border-b border-neutral-300" title={film.title} synopsisUrl={film.synopsis_url} />
 
-				<div className="flex flex-col h-full gap-2 ml-2 px-4 py-2 border-l border-neutral-300">
+			<main className="grow flex flex-col md:overflow-hidden md:grid md:grid-cols-12 gap-2 mx-4 py-3">
+				<VideoPlayer className="p-2 col-span-6 lg:col-span-8 xl:col-span-9" sourceUrl={film.file_url} updateTime={updateTime} ref={videoPlayer} />
+
+				<div className="flex flex-col gap-2 overflow-hidden md:col-span-6 lg:col-span-4 xl:col-span-3 p-2 md:border-l md:border-neutral-300">
 					<Tabs>
 						<TabList>
 							<Tab>
-								Chaptering
+								Chapitrage
 							</Tab>
 							<Tab>
-								Chatroom
+								Discussion
 							</Tab>
 						</TabList>
 
 						<TabPanel>
 							<Chaptering
+								className="overflow-auto p-2"
 								chapters={chapters!}
 								currentChapter={currentChapter}
 								currentChapterDuration={currentChapterDuration!}
@@ -121,21 +121,16 @@ function App() {
 						</TabPanel>
 
 						<TabPanel>
-							<Chatroom />
+							<Chatroom className="p-2" />
 						</TabPanel>
 					</Tabs>
-
-					<button className="flex justify-center items-center gap-2 text-md button mb-2">
-						<FontAwesomeIcon icon={faMap} />
-						Ouvrir la carte
-					</button>
 				</div>
 			</main>
 		</>
 	}
 
 	return (
-		<div className="min-h-screen h-screen flex flex-col">
+		<div className="h-screen min-h-screen md:overflow-hidden flex flex-col">
 			{content}
 		</div>
 	)
