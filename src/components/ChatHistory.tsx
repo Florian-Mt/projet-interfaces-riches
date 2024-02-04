@@ -1,4 +1,5 @@
 import classNames from "classnames"
+import { useEffect, useRef } from "react"
 
 import { SocketApiResponse } from "@/signatures"
 
@@ -8,7 +9,18 @@ type ChatHistoryProps = {
 }
 
 const ChatHistory = ({className, messages}: ChatHistoryProps) => {
-	return <div className={classNames(className, "flex flex-col")}>
+	const history = useRef<HTMLDivElement | null>(null)
+
+	const scrollToEnd = () => {
+		history.current!.scrollTop = history.current!.scrollHeight
+	}
+
+	useEffect(() => {
+		// Défile automatiquement vers le dernier message ajouté
+		scrollToEnd()
+	}, [messages])
+
+	return <div className={classNames(className, "relative flex flex-col")} ref={history}>
 		{messages.map((message, i) => {
 			const messageTime = new Date(message.when)
 

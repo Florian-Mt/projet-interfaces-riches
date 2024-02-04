@@ -7,6 +7,7 @@ type ChatMessage = {
 }
 
 const ChatMessage = ({className, submitMessage}: ChatMessage) => {
+	const [collapsed, setCollapsed] = useState<boolean>(true)
 	const [userName, setUserName] = useState<string>("")
 	const [message, setMessage] = useState<string>("")
 
@@ -17,9 +18,14 @@ const ChatMessage = ({className, submitMessage}: ChatMessage) => {
 		// Nettoie les champs de saisie après envoi du message
 		setUserName("")
 		setMessage("")
+		setCollapsed(true)
 	}
 
-	return <form action="#" className={classNames(className, "flex flex-col gap-2 py-2 border-t border-neutral-300")} onSubmit={handleSubmission}>
+	return collapsed
+		? <button className="button" onClick={() => setCollapsed(false)}>
+			Écrire un message
+		</button>
+		: <form action="#" className={classNames(className, "flex flex-col gap-2 py-2 border-t border-neutral-300")} onSubmit={handleSubmission}>
 		<div className="flex flex-col gap-1">
 			<label htmlFor="userName">Nom</label>
 			<input
@@ -42,6 +48,9 @@ const ChatMessage = ({className, submitMessage}: ChatMessage) => {
 		<button className="flex justify-center items-center gap-2 text-md button mt-2">
 			Envoyer
 		</button>
+			<button className="anchor" onClick={() => setCollapsed(true)}>
+				Annuler
+			</button>
 	</form>
 }
 
