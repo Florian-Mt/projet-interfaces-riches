@@ -15,7 +15,7 @@ type ChapteringProps = {
 
 const Chaptering = ({className, chapters, currentChapter, currentChapterDuration, currentChapterProgress, changeTimePosition}: ChapteringProps) => {
 	const [isDraggingProgressBar, setIsDraggingProgressBar] = useState<boolean>(false)
-	const progressBar = useRef<HTMLProgressElement | null>(null)
+	const progressBar = useRef<HTMLProgressElement>(null)
 
 	const jumpToPosition = (event: MouseEvent | ReactMouseEvent<HTMLProgressElement>) => {
 		const progressClientRect = (event.target as HTMLProgressElement).getBoundingClientRect()

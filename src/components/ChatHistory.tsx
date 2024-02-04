@@ -9,7 +9,7 @@ type ChatHistoryProps = {
 }
 
 const ChatHistory = ({className, messages}: ChatHistoryProps) => {
-	const history = useRef<HTMLDivElement | null>(null)
+	const history = useRef<HTMLDivElement>(null)
 
 	const scrollToEnd = () => {
 		history.current!.scrollTop = history.current!.scrollHeight

@@ -25,7 +25,7 @@ function App() {
 	const [currentChapterDuration, setCurrentChapterDuration] = useState<number | null>(null)
 	const [currentChapterProgress, setCurrentChapterProgress] = useState<number | null>(null)
 
-	const videoPlayer = useRef<HTMLVideoElement | null>(null)
+	const videoPlayer = useRef<HTMLVideoElement>(null)
 	const mapLocation = {
 		lat: 51.505, // Remplacez ces coordonnées par celles de votre emplacement
 		lon: -0.09,
