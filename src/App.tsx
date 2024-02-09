@@ -12,7 +12,7 @@ import VideoPlayer from "@/components/VideoPlayer.tsx"
 import clamp from "./functions/clamp"
 import findCorrespondingChapter from "@/functions/findCorrespondingChapter"
 import getChapterDuration from "@/functions/getChapterDuration"
-import MapPopup from "./components/MapPopup"
+import Map from "./components/Map"
 
 function App() {
 	const [film, setFilm] = useState<Film | null>(null)
@@ -112,11 +112,12 @@ function App() {
 			<main className="grow flex flex-col md:overflow-hidden md:grid md:grid-cols-12 gap-2 mx-4 py-3">
 				{
           isPopupOpen
-            ? <MapPopup 
+            ? <Map
               className="p-2 col-span-6 lg:col-span-8 xl:col-span-9"
-              mapLocation={mapLocation}
               waypoints={waypoints!}
-              changeTimePosition={changeTimePosition} />
+              changeTimePosition={changeTimePosition}
+              currentChapterDuration={currentChapterDuration}
+              currentChapterStartTime={currentChapter ? chapters![currentChapter].pos : null} />
             : <VideoPlayer className="p-2 col-span-6 lg:col-span-8 xl:col-span-9" sourceUrl={film.file_url} updateTime={updateTime} ref={videoPlayer} />
         }
 

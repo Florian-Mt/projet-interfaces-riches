@@ -13,13 +13,15 @@ interface MapPopupProps {
 	}
 	waypoints: Array<Waypoint>
 	changeTimePosition: (chapter: number) => void
+	currentChapter : number|null
 }
 
-const MapPopup: React.FC<MapPopupProps> = ({ className, waypoints, changeTimePosition }) => {
+const MapPopup: React.FC<MapPopupProps> = ({ className, waypoints, changeTimePosition,currentChapter }) => {
 	return <div className={classNames(className)}>
 		<Map
 			waypoints={waypoints}
-			changeTimePosition={changeTimePosition} />
+			changeTimePosition={changeTimePosition} 
+			currentChapter={currentChapter} />
 	</div>
 }
 
