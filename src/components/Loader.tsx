@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react"
-import { SizeProp } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { SizeProp } from "@fortawesome/fontawesome-svg-core"
 import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 
 type LoaderProps = {

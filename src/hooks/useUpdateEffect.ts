@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-import useIsMounting from "@/hooks/useIsMounting"
+import useIsMounting from "@/hooks/useIsMounting.ts"
 
 const useUpdateEffect: typeof useEffect = (effect, deps) => {
 	const isMounting = useIsMounting()

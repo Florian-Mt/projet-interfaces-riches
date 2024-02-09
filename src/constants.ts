@@ -4,3 +4,7 @@ export const SECONDS_PER_HOUR = SECONDS_PER_MINUTE * MINUTES_PER_HOUR
 
 export const JSON_API_URL = "https://imr3-react.herokuapp.com/backend"
 export const WEBSOCKET_API_URL = "wss://imr3-react.herokuapp.com"
+
+// Coordonnées par défaut de la carte pour les chapitres sans coordonnées renseignées
+export const DEFAULT_MAP_LATITUDE = 38.9071923
+export const DEFAULT_MAP_LONGITUDE = -77.0368707

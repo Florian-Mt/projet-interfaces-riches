@@ -1,4 +1,4 @@
-import { Chapter } from "@/signatures"
+import { Chapter } from "@/signatures.ts"
 
 const findCorrespondingChapter = (chapters: Array<Chapter>, timePosition: number): number => {
 	let chapter = chapters.length - 1

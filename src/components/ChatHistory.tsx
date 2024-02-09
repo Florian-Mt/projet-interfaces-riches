@@ -1,8 +1,8 @@
 import classNames from "classnames"
 import { useEffect, useRef, useState, MouseEvent } from "react"
 
-import { Message, SocketApiResponse } from "@/signatures"
-import useUpdateEffect from "@/hooks/useUpdateEffect"
+import { Message, SocketApiResponse } from "@/signatures.ts"
+import useUpdateEffect from "@/hooks/useUpdateEffect.ts"
 
 type ChatHistoryProps = {
 	className?: string
@@ -57,7 +57,7 @@ const ChatHistory = ({className, messages}: ChatHistoryProps) => {
 
 	useUpdateEffect(() => {
 		setMessagesCount(messages.length)
-		setNewMessagesCount((newMessagesCount) => newMessagesCount + (messages.length - messagesCount))
+		setNewMessagesCount(newMessagesCount => newMessagesCount + (messages.length - messagesCount))
 
 		// Défile automatiquement vers le dernier message ajouté si l’utilisateur n’a pas remonté le fil des messages
 		if (isScrollMax) {

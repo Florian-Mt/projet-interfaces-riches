@@ -1,4 +1,4 @@
-import { Chapter } from "@/signatures"
+import { Chapter } from "@/signatures.ts"
 
 const getChapterDuration = (chapters: Array<Chapter>, chapter: number, totalDuration: number): number => {
 	if (chapter < 0 || chapter >= chapters.length) {

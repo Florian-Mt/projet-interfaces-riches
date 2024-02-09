@@ -7,12 +7,12 @@ import Banner from "@/components/Banner.tsx"
 import Chaptering from "@/components/Chaptering.tsx"
 import Chatroom from "@/components/Chatroom.tsx"
 import Loader from "@/components/Loader.tsx"
-import UiError from "@/components/UiError"
+import Map from "@/components/Map.tsx"
+import UiError from "@/components/UiError.tsx"
 import VideoPlayer from "@/components/VideoPlayer.tsx"
-import clamp from "./functions/clamp"
-import findCorrespondingChapter from "@/functions/findCorrespondingChapter"
-import getChapterDuration from "@/functions/getChapterDuration"
-import Map from "./components/Map"
+import clamp from "@/functions/clamp.ts"
+import findCorrespondingChapter from "@/functions/findCorrespondingChapter.ts"
+import getChapterDuration from "@/functions/getChapterDuration.ts"
 
 function App() {
 	const [film, setFilm] = useState<Film | null>(null)
@@ -25,29 +25,24 @@ function App() {
 	const [currentChapterDuration, setCurrentChapterDuration] = useState<number | null>(null)
 	const [currentChapterProgress, setCurrentChapterProgress] = useState<number | null>(null)
 
-  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false)
+	const [isMapOpen, setIsMapOpen] = useState<boolean>(false)
 
 	const videoPlayer = useRef<HTMLVideoElement>(null)
-	const mapLocation = {
-		lat: 51.505, // Remplacez ces coordonnées par celles de votre emplacement
-		lon: -0.09,
-		name: "Emplacement de la carte",
-	}
 
 	useEffect(() => {
 		fetch(JSON_API_URL)
-			.then(async (response) => {
+			.then(async response => {
 				if (! response.ok) {
 					const errorMessage = response.status === 429
-						? "Vous avez effectué trop de requêtes. Veuillez réessayez dans un instant."
+						? "Vous avez effectué trop de requêtes. Veuillez réessayer dans un instant."
 						: "Une erreur inattendue est survenue."
 
 					throw new Error(errorMessage)
 				}
 
-				return response.json()
+				return response.json() as Promise<JsonApiResponse>
 			})
-			.then((apiData: JsonApiResponse) => {
+			.then(apiData => {
 				try {
 					setFilm(apiData.Film)
 					setChapters(apiData.Chapters)
@@ -57,7 +52,7 @@ function App() {
 				catch (error) {
 					setApiError("Le serveur a fourni une réponse malformée.")
 				}
-			}, (error) => {
+			}, error => {
 				setApiError(error.message)
 			})
 	}, [])
@@ -103,23 +98,28 @@ function App() {
 	else {
 		content = <>
 			<Banner
-        className="mx-4 px-2 py-3 border-b border-neutral-300" 
-        title={film.title} 
-        synopsisUrl={film.synopsis_url}
-        isPopupOpen={isPopupOpen}
-        setIsPopupOpen={setIsPopupOpen} />
+				className="mx-4 px-2 py-3 border-b border-neutral-300" 
+				title={film.title} 
+				synopsisUrl={film.synopsis_url}
+				isMapOpen={isMapOpen}
+				setIsMapOpen={setIsMapOpen} />
 
 			<main className="grow flex flex-col md:overflow-hidden md:grid md:grid-cols-12 gap-2 mx-4 py-3">
 				{
-          isPopupOpen
-            ? <Map
-              className="p-2 col-span-6 lg:col-span-8 xl:col-span-9"
-              waypoints={waypoints!}
-              changeTimePosition={changeTimePosition}
-              currentChapterDuration={currentChapterDuration}
-              currentChapterStartTime={currentChapter ? chapters![currentChapter].pos : null} />
-            : <VideoPlayer className="p-2 col-span-6 lg:col-span-8 xl:col-span-9" sourceUrl={film.file_url} updateTime={updateTime} ref={videoPlayer} />
-        }
+					isMapOpen
+						? <Map
+							className="p-2 col-span-6 lg:col-span-8 xl:col-span-9"
+							waypoints={waypoints!}
+							changeTimePosition={changeTimePosition}
+							currentChapterDuration={currentChapterDuration}
+							currentChapterStartTime={currentChapter ? Number(chapters![currentChapter].pos) : null} />
+
+						: <VideoPlayer
+							className="p-2 col-span-6 lg:col-span-8 xl:col-span-9"
+							sourceUrl={film.file_url}
+							updateTime={updateTime}
+							ref={videoPlayer} />
+				}
 
 				<div className="flex flex-col gap-2 overflow-hidden md:col-span-6 lg:col-span-4 xl:col-span-3 p-2 md:border-l md:border-neutral-300">
 					<Tabs>
@@ -146,8 +146,6 @@ function App() {
 							<Chatroom className="p-2" />
 						</TabPanel>
 					</Tabs>
-
-					
 				</div>
 			</main>
 		</>

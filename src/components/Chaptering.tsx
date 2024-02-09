@@ -10,7 +10,7 @@ type ChapteringProps = {
 	currentChapter: number | null
 	currentChapterDuration: number | null
 	currentChapterProgress: number | null
-	changeTimePosition: (chapter: number) => void
+	changeTimePosition: (chapter: number, continuePlaying?: boolean) => void
 }
 
 const Chaptering = ({className, chapters, currentChapter, currentChapterDuration, currentChapterProgress, changeTimePosition}: ChapteringProps) => {

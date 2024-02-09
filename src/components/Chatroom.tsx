@@ -1,8 +1,8 @@
 import classNames from "classnames"
 import { useEffect, useState } from "react"
 
-import { WEBSOCKET_API_URL } from "@/constants"
-import { Message, SocketApiResponse } from "@/signatures"
+import { WEBSOCKET_API_URL } from "@/constants.ts"
+import { Message, SocketApiResponse } from "@/signatures.ts"
 import ChatHistory from "@/components/ChatHistory.tsx"
 import ChatNewMessage from "@/components/ChatNewMessage.tsx"
 import Loader from "@/components/Loader.tsx"
@@ -25,9 +25,9 @@ const Chatroom = ({className}: ChatroomProps) => {
 			setSocket(socket)
 		})
 
-		socket.addEventListener("message", (event) => {
+		socket.addEventListener("message", event => {
 			const newMessages = JSON.parse(event.data) as SocketApiResponse
-			setMessages((messages) => [...messages, ...newMessages])
+			setMessages(messages => [...messages, ...newMessages])
 		})
 
 		socket.addEventListener("close", () => {
