@@ -8,9 +8,11 @@ type BannerProps = {
 	className?: string
 	title: Film["title"]
 	synopsisUrl: Film["synopsis_url"]
+	isPopupOpen: boolean
+	setIsPopupOpen: (value: boolean)=>void
 }
 
-const Banner = ({className, title, synopsisUrl}: BannerProps) => {
+const Banner = ({className, title, synopsisUrl, isPopupOpen, setIsPopupOpen}: BannerProps) => {
 	return <header className={classNames(className, "flex justify-between items-center")}>
 		<div className="flex flex-col items-start">
 			<h1 className="text-xl font-bold">
@@ -23,8 +25,9 @@ const Banner = ({className, title, synopsisUrl}: BannerProps) => {
 			</a>
 		</div>
 
-		<button className="flex justify-center items-center gap-2 text-md button">
-			Ouvrir la carte
+		<button className="flex justify-center items-center gap-2 text-md button"
+			onClick={()=>setIsPopupOpen(!isPopupOpen)}>
+			{isPopupOpen?"Fermer la carte":"Ouvrir la carte"}
 			<FontAwesomeIcon icon={faMap} />
 		</button>
 	</header>

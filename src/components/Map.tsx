@@ -1,39 +1,35 @@
-// Map.tsx
-import React from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import React from "react"
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
+
+import { Waypoint } from "@/signatures"
+import formatTime from "@/functions/formatTime"
 
 interface MapProps {
-  mapLocation: {
-    lat: number;
-    lon: number;
-    name: string;
-  };
+	waypoints: Array<Waypoint>
+	changeTimePosition: (chapter: number) => void
 }
 
-const Map: React.FC<MapProps> = ({ mapLocation }) => {
-  const { lat, lon, name } = mapLocation;
+const Map: React.FC<MapProps> = ({ waypoints, changeTimePosition }) => {
+	const defaultCenter = {
+		lat: 38.9071923,
+		lng: -77.0368707,
+	}
 
-  const mapStyles = {
-    height: '400px',
-    width: '100%',
-  };
+	return <MapContainer className="w-full h-full" center={defaultCenter} zoom={13} scrollWheelZoom={false}>
+		<TileLayer
+			attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+			url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-  const defaultCenter = {
-    lat: lat,
-    lng: lon,
-  };
+			{waypoints.map(waypoint => <Marker position={{ lat: Number(waypoint.lat), lng: Number(waypoint.lng) }}>
+				<Popup>
+					<span className="flex gap-1">
+						{waypoint.label}
+						<button className="anchor" onClick={()=>changeTimePosition(Number(waypoint.timestamp))}>{formatTime(Number(waypoint.timestamp))}</button>
+					</span>
+				</Popup>
+			</Marker>
+		)}
+	</MapContainer>
+}
 
-  return (
-    <LoadScript googleMapsApiKey="AIzaSyA62XjyfmX-GxA7B_EMMzpmWeDWDv6SDGU">
-      <GoogleMap
-        mapContainerStyle={mapStyles}
-        zoom={13}
-        center={defaultCenter}
-      >
-        <Marker position={defaultCenter} title={name} />
-      </GoogleMap>
-    </LoadScript>
-  );
-};
-
-export default Map;
+export default Map
