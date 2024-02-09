@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { WEBSOCKET_API_URL } from "@/constants"
 import { Message, SocketApiResponse } from "@/signatures"
 import ChatHistory from "@/components/ChatHistory.tsx"
-import ChatMessage from "@/components/ChatMessage.tsx"
+import ChatNewMessage from "@/components/ChatNewMessage.tsx"
 import Loader from "@/components/Loader.tsx"
 
 type ChatroomProps = {
@@ -54,7 +54,7 @@ const Chatroom = ({className}: ChatroomProps) => {
 		connected
 				? <>
 					<ChatHistory className="overflow-auto" messages={messages} />
-					<ChatMessage submitMessage={submitMessage} />
+					<ChatNewMessage submitMessage={submitMessage} />
 				</>
 				: <div className="grow flex justify-center items-center">
 					<Loader iconSize="4x" />

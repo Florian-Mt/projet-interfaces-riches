@@ -26,32 +26,32 @@ const ChatMessage = ({className, submitMessage}: ChatMessage) => {
 			Écrire un message
 		</button>
 		: <form action="#" className={classNames(className, "flex flex-col gap-2 py-2 border-t border-neutral-300")} onSubmit={handleSubmission}>
-		<div className="flex flex-col gap-1">
-			<label htmlFor="userName">Nom</label>
-			<input
-				className="p-2 rounded-md border border-neutral-300"
-				type="text"
-				id="userName"
-				value={userName}
-				onChange={event => setUserName(event.target.value)} />
-		</div>
+			<div className="flex flex-col gap-1">
+				<label htmlFor="userName">Nom</label>
+				<input
+					className="p-2 rounded-md border border-neutral-300"
+					type="text"
+					id="userName"
+					value={userName}
+					onChange={event => setUserName(event.target.value)} />
+			</div>
 
-		<div className="flex flex-col gap-1">
-			<label htmlFor="message">Message</label>
-			<textarea
-				className="p-2 rounded-md border border-neutral-300"
-				id="message"
-				value={message}
-				onChange={event => setMessage(event.target.value)} />
-		</div>
+			<div className="flex flex-col gap-1">
+				<label htmlFor="message">Message</label>
+				<textarea
+					className="p-2 rounded-md border border-neutral-300"
+					id="message"
+					value={message}
+					onChange={event => setMessage(event.target.value)} />
+			</div>
 
-		<button className="flex justify-center items-center gap-2 text-md button mt-2">
-			Envoyer
-		</button>
+			<button className="flex justify-center items-center gap-2 text-md button mt-2">
+				Envoyer
+			</button>
 			<button className="anchor" onClick={() => setCollapsed(true)}>
 				Annuler
 			</button>
-	</form>
+		</form>
 }
 
 export default ChatMessage

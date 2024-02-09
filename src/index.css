@@ -45,3 +45,11 @@ body {
 .button {
 	@apply px-5 py-2.5 focus:outline-none focus:ring-4 rounded-lg text-white bg-blue-700 dark:bg-blue-600 hover:bg-blue-800 dark:hover:bg-blue-700 focus:ring-blue-500/50 dark:focus:ring-blue-400/50;
 }
+
+.message {
+	@apply bg-white even:bg-neutral-100;
+}
+
+.marker ~ .message {
+	@apply bg-neutral-100 even:bg-white;
+}
