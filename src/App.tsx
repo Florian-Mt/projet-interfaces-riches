@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs"
 
 import { JSON_API_URL } from "@/constants.ts"
-import { Chapters, Film, JsonApiResponse, Keywords, Waypoints } from "@/signatures.ts"
+import { Chapters, Film, JsonApiResponse, Keyword, Keywords, Waypoints } from "@/signatures.ts"
 import Banner from "@/components/Banner.tsx"
 import Chaptering from "@/components/Chaptering.tsx"
 import Chatroom from "@/components/Chatroom.tsx"
@@ -56,6 +56,16 @@ function App() {
 		return clamp(0, currentTime - currentChapterStartTime!, currentChapterDuration!)
 	}, [chapters, currentTime])
 
+	const currentKeywords = useMemo<Keyword | null>(() => {
+		if (currentTime === null) {
+			return null
+		}
+
+		return keywords?.find(keyword => {
+			const keywordTs = Number(keyword.pos)
+			return currentChapterStartTime! <= keywordTs && keywordTs < currentChapterStartTime! + currentChapterDuration!
+		})!
+	}, [keywords, currentTime])
 
 	const [isMapOpen, setIsMapOpen] = useState<boolean>(false)
 
@@ -118,6 +128,7 @@ function App() {
 				className="mx-4 px-2 py-3 border-b border-neutral-300" 
 				title={film.title} 
 				synopsisUrl={film.synopsis_url}
+				currentKeywords={currentKeywords}
 				isMapOpen={isMapOpen}
 				setIsMapOpen={setIsMapOpen} />
 
