@@ -43,4 +43,4 @@ export type Message = {
 	when: number
 }
 
-export type SocketApiResponse = Array<Message>
+export type SocketApiResponse = Array<Message> | Message

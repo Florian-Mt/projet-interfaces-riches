@@ -1,12 +1,12 @@
 import classNames from "classnames"
 import { useEffect, useRef, useState, MouseEvent } from "react"
 
-import { Message, SocketApiResponse } from "@/signatures.ts"
+import { Message } from "@/signatures.ts"
 import useUpdateEffect from "@/hooks/useUpdateEffect.ts"
 
 type ChatHistoryProps = {
 	className?: string
-	messages: SocketApiResponse
+	messages: Array<Message>
 }
 
 const ChatHistory = ({className, messages}: ChatHistoryProps) => {

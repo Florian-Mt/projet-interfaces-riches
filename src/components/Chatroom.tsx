@@ -27,7 +27,13 @@ const Chatroom = ({className}: ChatroomProps) => {
 
 		socket.addEventListener("message", event => {
 			const newMessages = JSON.parse(event.data) as SocketApiResponse
-			setMessages(messages => [...messages, ...newMessages])
+
+			if (newMessages instanceof Array) {
+				setMessages(messages => [...messages, ...newMessages])
+			}
+			else {
+				setMessages(messages => [...messages, newMessages])
+			}
 		})
 
 		socket.addEventListener("close", () => {
