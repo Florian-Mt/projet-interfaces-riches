@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs"
 
 import { JSON_API_URL } from "@/constants.ts"
@@ -21,9 +21,41 @@ function App() {
 	const [keywords, setKeywords] = useState<Keywords | null>(null)
 	const [apiError, setApiError] = useState<string | null>(null)
 
-	const [currentChapter, setCurrentChapter] = useState<number | null>(null)
-	const [currentChapterDuration, setCurrentChapterDuration] = useState<number | null>(null)
-	const [currentChapterProgress, setCurrentChapterProgress] = useState<number | null>(null)
+	const [currentTime, setCurrentTime] = useState<number | null>(null)
+	const [filmDuration, setFilmDuration] = useState<number | null>(null)
+
+	const currentChapter = useMemo<number | null>(() => {
+		if (chapters === null || currentTime === null || filmDuration === null) {
+			return null
+		}
+
+		return findCorrespondingChapter(chapters, currentTime)
+	}, [chapters, currentTime])
+
+	const currentChapterStartTime = useMemo<number | null>(() => {
+		if (chapters === null || currentChapter === null) {
+			return null
+		}
+
+		return Number(chapters[currentChapter].pos)
+	}, [chapters, currentChapter])
+
+	const currentChapterDuration = useMemo<number | null>(() => {
+		if (chapters === null || currentChapter === null || filmDuration === null) {
+			return null
+		}
+
+		return getChapterDuration(chapters, currentChapter, filmDuration)
+	}, [chapters, currentChapter, filmDuration])
+
+	const currentChapterProgress = useMemo<number | null>(() => {
+		if (chapters === null || currentTime === null) {
+			return null
+		}
+
+		return clamp(0, currentTime - currentChapterStartTime!, currentChapterDuration!)
+	}, [chapters, currentTime])
+
 
 	const [isMapOpen, setIsMapOpen] = useState<boolean>(false)
 
@@ -58,29 +90,14 @@ function App() {
 	}, [])
 
 	const changeTimePosition = (timePosition: number, continuePlaying: boolean = false) => {
-		const chapter = findCorrespondingChapter(chapters!, timePosition)
-		const chapterStart = Number(chapters![chapter!].pos)
-		const chapterDuration = getChapterDuration(chapters!, chapter, videoPlayer.current!.duration)
-
-		setCurrentChapter(chapter)
-		setCurrentChapterProgress(clamp(0, timePosition - chapterStart, chapterDuration))
-
 		if (currentChapter !== null) {
+			setCurrentTime(timePosition)
 			videoPlayer.current!.currentTime = timePosition
 
 			if (continuePlaying) {
 				videoPlayer.current!.play()
 			}
 		}
-	}
-
-	const updateTime = (currentTime: number) => {
-		const currentChapter = findCorrespondingChapter(chapters!, currentTime)
-
-		// Update current chapter
-		setCurrentChapter(currentChapter)
-		setCurrentChapterDuration(getChapterDuration(chapters!, currentChapter!, videoPlayer.current!.duration))
-		setCurrentChapterProgress(videoPlayer.current!.currentTime - Number(chapters![currentChapter!].pos))
 	}
 
 	let content
@@ -117,7 +134,8 @@ function App() {
 						: <VideoPlayer
 							className="p-2 col-span-6 lg:col-span-8 xl:col-span-9"
 							sourceUrl={film.file_url}
-							updateTime={updateTime}
+							setCurrentTime={setCurrentTime}
+							setFilmDuration={setFilmDuration}
 							ref={videoPlayer} />
 				}
 

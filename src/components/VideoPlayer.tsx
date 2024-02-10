@@ -1,18 +1,17 @@
-import { forwardRef, ForwardedRef, SyntheticEvent } from "react"
 import classNames from "classnames"
+import { forwardRef, Dispatch, ForwardedRef, SetStateAction, SyntheticEvent } from "react"
 
 import { Film } from "@/signatures.ts"
 
 type VideoPlayerProps = {
 	className?: string
 	sourceUrl: Film["file_url"]
-	updateTime: (currentTime: number) => void
+	setCurrentTime: Dispatch<SetStateAction<number | null>>
+	setFilmDuration: Dispatch<SetStateAction<number | null>>
 }
 
-const VideoPlayer = ({className, sourceUrl, updateTime}: VideoPlayerProps, ref: ForwardedRef<HTMLVideoElement>) => {
-	const handleTimeChange = (event: SyntheticEvent<HTMLVideoElement>) => {
-		updateTime(Math.floor((event.target as HTMLVideoElement).currentTime))
-	}
+const VideoPlayer = ({className, sourceUrl, setCurrentTime, setFilmDuration}: VideoPlayerProps, ref: ForwardedRef<HTMLVideoElement>) => {
+	const handleTimeChange = (event: SyntheticEvent<HTMLVideoElement>) => setCurrentTime((event.target as HTMLVideoElement).currentTime)
 
 	return <div className={classNames(className, "flex justify-center aspect-video md:aspect-auto")}>
 		<div className="grow flex flex-col bg-black">
@@ -20,6 +19,7 @@ const VideoPlayer = ({className, sourceUrl, updateTime}: VideoPlayerProps, ref: 
 				className="h-full"
 				src={sourceUrl}
 				controls
+				onLoadedData={(event) => setFilmDuration((event.target as HTMLVideoElement).duration)}
 				onPlay={handleTimeChange}
 				onTimeUpdate={handleTimeChange}
 				onEnded={handleTimeChange}
