@@ -52,7 +52,7 @@ const Map = ({className, changeTimePosition, currentChapterDuration, currentChap
 							<span className="flex gap-1">
 								{waypoint.label}
 
-								<button className="anchor" onClick={() => changeTimePosition(Number(waypoint.timestamp))}>
+								<button className="anchor" onClick={() => changeTimePosition(Number(waypoint.timestamp), true)}>
 									{formatTime(Number(waypoint.timestamp))}
 								</button>
 							</span>

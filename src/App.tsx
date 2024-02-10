@@ -99,10 +99,23 @@ function App() {
 			})
 	}, [])
 
+	const toggleMap = () => {
+		setIsMapOpen(isMapOpen => {
+			// Met la vidéo en pause à l’ouverture de la carte
+			if (! isMapOpen) {
+				videoPlayer.current!.pause()
+			}
+
+			return ! isMapOpen
+		})
+	}
+
 	const changeTimePosition = (timePosition: number, continuePlaying: boolean = false) => {
 		if (currentChapter !== null) {
 			setCurrentTime(timePosition)
 			videoPlayer.current!.currentTime = timePosition
+			// Ferme la carte lors d’un saut dans la vidéo
+			setIsMapOpen(false)
 
 			if (continuePlaying) {
 				videoPlayer.current!.play()
@@ -130,25 +143,26 @@ function App() {
 				synopsisUrl={film.synopsis_url}
 				currentKeywords={currentKeywords}
 				isMapOpen={isMapOpen}
-				setIsMapOpen={setIsMapOpen} />
+				toggleMap={toggleMap} />
 
 			<main className="grow flex flex-col md:overflow-hidden md:grid md:grid-cols-12 gap-2 mx-4 py-3">
-				{
-					isMapOpen
-						? <Map
-							className="p-2 col-span-6 lg:col-span-8 xl:col-span-9"
+				<div className="relative m-2 col-span-6 lg:col-span-8 xl:col-span-9">
+					<VideoPlayer
+						className="absolute top-0 left-0 bottom-0 right-0"
+						sourceUrl={film.file_url}
+						setCurrentTime={setCurrentTime}
+						setFilmDuration={setFilmDuration}
+						ref={videoPlayer} />
+
+					{
+						isMapOpen && <Map
+							className="absolute top-0 left-0 bottom-0 right-0"
 							waypoints={waypoints!}
 							changeTimePosition={changeTimePosition}
 							currentChapterDuration={currentChapterDuration}
 							currentChapterStartTime={currentChapter ? Number(chapters![currentChapter].pos) : null} />
-
-						: <VideoPlayer
-							className="p-2 col-span-6 lg:col-span-8 xl:col-span-9"
-							sourceUrl={film.file_url}
-							setCurrentTime={setCurrentTime}
-							setFilmDuration={setFilmDuration}
-							ref={videoPlayer} />
-				}
+					}
+				</div>
 
 				<div className="flex flex-col gap-2 overflow-hidden md:col-span-6 lg:col-span-4 xl:col-span-3 p-2 md:border-l md:border-neutral-300">
 					<Tabs>

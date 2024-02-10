@@ -11,10 +11,10 @@ type BannerProps = {
 	synopsisUrl: Film["synopsis_url"]
 	currentKeywords: Keyword | null
 	isMapOpen: boolean
-	setIsMapOpen: (value: boolean) => void
+	toggleMap: () => void
 }
 
-const Banner = ({className, title, synopsisUrl, currentKeywords, isMapOpen, setIsMapOpen}: BannerProps) => {
+const Banner = ({className, title, synopsisUrl, currentKeywords, isMapOpen, toggleMap}: BannerProps) => {
 	return <header className={classNames(className, "flex justify-between items-center")}>
 		<div className="flex flex-col gap-2 items-start">
 			<h1 className="text-xl font-bold">
@@ -31,7 +31,7 @@ const Banner = ({className, title, synopsisUrl, currentKeywords, isMapOpen, setI
 			</div>
 		</div>
 
-		<button className="flex justify-center items-center gap-2 text-md button" onClick={() => setIsMapOpen(! isMapOpen)}>
+		<button className="flex justify-center items-center gap-2 text-md button" onClick={toggleMap}>
 			{isMapOpen ? "Fermer la carte" : "Ouvrir la carte"}
 			<FontAwesomeIcon icon={faMap} />
 		</button>
