@@ -41,6 +41,7 @@ export type Message = {
 	message: string
 	name: string
 	when: number
+	moment?: number
 }
 
 export type SocketApiResponse = Array<Message> | Message

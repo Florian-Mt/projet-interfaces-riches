@@ -8,3 +8,5 @@ export const WEBSOCKET_API_URL = "wss://imr3-react.herokuapp.com"
 // Coordonnées par défaut de la carte pour les chapitres sans coordonnées renseignées
 export const DEFAULT_MAP_LATITUDE = 38.9071923
 export const DEFAULT_MAP_LONGITUDE = -77.0368707
+
+export const TIME_FORMAT = /^(?:([01][0-9]|2[0-3]):)?([0-5][0-9]):([0-5][0-9])$/

@@ -1,15 +1,19 @@
 import classNames from "classnames"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faClock } from "@fortawesome/free-solid-svg-icons"
 import { useEffect, useRef, useState, MouseEvent } from "react"
 
 import { Message } from "@/signatures.ts"
 import useUpdateEffect from "@/hooks/useUpdateEffect.ts"
+import formatTime from "@/functions/formatTime.ts"
 
 type ChatHistoryProps = {
 	className?: string
 	messages: Array<Message>
+	changeTimePosition: (chapter: number, continuePlaying?: boolean) => void
 }
 
-const ChatHistory = ({className, messages}: ChatHistoryProps) => {
+const ChatHistory = ({className, messages, changeTimePosition}: ChatHistoryProps) => {
 	const history = useRef<HTMLDivElement>(null)
 	const [isScrollMax, setIsScrollMax] = useState<boolean>(true)
 	const [messagesCount, setMessagesCount] = useState<number>(0)
@@ -69,8 +73,18 @@ const ChatHistory = ({className, messages}: ChatHistoryProps) => {
 		const messageTime = new Date(message.when)
 
 		return <div className="message px-4 py-2" key={i}>
-			<p className="font-bold">{message.name}</p>
-			<p className="text-neutral-600 text-xs">Le {messageTime.toLocaleDateString()} à {messageTime.toLocaleTimeString()}</p>
+			<div className="flex justify-between">
+				<div className="flex flex-col">
+					<p className="font-bold">{message.name}</p>
+					<p className="text-neutral-600 text-xs">Le {messageTime.toLocaleDateString()} à {messageTime.toLocaleTimeString()}</p>
+				</div>
+				{
+					message.moment && <button className="self-start anchor flex gap-1 justify-center items-center" onClick={() => changeTimePosition(message.moment!)}>
+						{formatTime(message.moment)}
+						<FontAwesomeIcon icon={faClock} />
+					</button>
+				}
+			</div>
 			<p className="break-all">{message.message}</p>
 		</div>
 	}

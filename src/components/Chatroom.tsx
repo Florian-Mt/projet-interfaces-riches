@@ -9,9 +9,12 @@ import Loader from "@/components/Loader.tsx"
 
 type ChatroomProps = {
 	className?: string
+	currentTime: number | null
+	changeTimePosition: (chapter: number, continuePlaying?: boolean) => void
+	filmDuration: number | null
 }
 
-const Chatroom = ({className}: ChatroomProps) => {
+const Chatroom = ({className, currentTime, changeTimePosition, filmDuration}: ChatroomProps) => {
 	const [socket, setSocket] = useState<WebSocket | null>(null)
 	const [connected, setConnected] = useState<boolean>(false)
 	const [messages, setMessages] = useState<Array<Message>>([])
@@ -46,10 +49,11 @@ const Chatroom = ({className}: ChatroomProps) => {
 		}
 	}, [])
 
-	const submitMessage = (name: string, content: string) => {
+	const submitMessage = (name: string, content: string, moment?: number) => {
 		const message = {
 			name,
 			message: content,
+			moment,
 		}
 
 		socket!.send(JSON.stringify(message))
@@ -58,13 +62,13 @@ const Chatroom = ({className}: ChatroomProps) => {
 	return <div className={classNames(className, "overflow-hidden grow flex flex-col gap-4")}>
 		{
 		connected
-				? <>
-					<ChatHistory className="overflow-auto" messages={messages} />
-					<ChatNewMessage submitMessage={submitMessage} />
-				</>
-				: <div className="grow flex justify-center items-center">
-					<Loader iconSize="4x" />
-				</div>
+			? <>
+				<ChatHistory className="overflow-auto" messages={messages} changeTimePosition={changeTimePosition} />
+				<ChatNewMessage currentTime={currentTime} filmDuration={filmDuration} submitMessage={submitMessage} />
+			</>
+			: <div className="grow flex justify-center items-center">
+				<Loader iconSize="4x" />
+			</div>
 		}
 	</div>
 }

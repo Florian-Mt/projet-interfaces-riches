@@ -172,7 +172,11 @@ function App() {
 						</TabPanel>
 
 						<TabPanel>
-							<Chatroom className="p-2" />
+							<Chatroom
+								className="p-2"
+								currentTime={currentTime}
+								changeTimePosition={changeTimePosition}
+								filmDuration={filmDuration} />
 						</TabPanel>
 					</Tabs>
 				</div>
