@@ -1,6 +1,6 @@
 import classNames from "classnames"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCircleInfo, faClock } from "@fortawesome/free-solid-svg-icons"
+import { faCircleInfo, faClock, faComment, faPaperPlane } from "@fortawesome/free-solid-svg-icons"
 import { useState, ChangeEvent, FormEvent, MouseEvent } from "react"
 
 import clamp from "@/functions/clamp.ts"
@@ -49,8 +49,9 @@ const ChatMessage = ({className, currentTime, filmDuration, submitMessage}: Chat
 	}
 
 	return collapsed
-		? <button className="button" onClick={() => setCollapsed(false)}>
+		? <button className="button flex gap-2 justify-center items-center" onClick={() => setCollapsed(false)}>
 			Écrire un message
+			<FontAwesomeIcon icon={faComment} />
 		</button>
 		: <form action="#" className={classNames(className, "flex flex-col gap-2 py-2 border-t border-neutral-300")} onSubmit={handleSubmission}>
 			<div className="flex flex-col gap-1">
@@ -96,8 +97,9 @@ const ChatMessage = ({className, currentTime, filmDuration, submitMessage}: Chat
 				</div>
 			</div>
 
-			<button className="flex justify-center items-center gap-2 text-md button mt-2">
+			<button className="flex gap-2 justify-center items-center text-md button mt-2">
 				Envoyer
+				<FontAwesomeIcon icon={faPaperPlane} />
 			</button>
 			<button className="anchor" onClick={() => setCollapsed(true)}>
 				Annuler

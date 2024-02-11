@@ -1,6 +1,6 @@
 import classNames from "classnames"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faArrowUpRightFromSquare, faMap } from "@fortawesome/free-solid-svg-icons"
+import { faArrowUpRightFromSquare, faMapLocationDot } from "@fortawesome/free-solid-svg-icons"
 
 import { Film, Keyword } from "@/signatures.ts"
 import Keywords from "@/components/Keywords.tsx"
@@ -33,7 +33,7 @@ const Banner = ({className, title, synopsisUrl, currentKeywords, isMapOpen, togg
 
 		<button className="flex justify-center items-center gap-2 text-md button" onClick={toggleMap}>
 			{isMapOpen ? "Fermer la carte" : "Ouvrir la carte"}
-			<FontAwesomeIcon icon={faMap} />
+			<FontAwesomeIcon icon={faMapLocationDot} />
 		</button>
 	</header>
 }

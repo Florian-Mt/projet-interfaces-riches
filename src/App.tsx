@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faComments, faListUl } from "@fortawesome/free-solid-svg-icons"
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs"
 
 import { JSON_API_URL } from "@/constants.ts"
@@ -168,10 +170,16 @@ function App() {
 					<Tabs>
 						<TabList>
 							<Tab>
-								Chapitrage
+								<span className="flex gap-2 justify-center items-center">
+									<FontAwesomeIcon icon={faListUl} />
+									Chapitrage
+								</span>
 							</Tab>
 							<Tab>
-								Discussion
+								<span className="flex gap-2 justify-center items-center">
+									<FontAwesomeIcon icon={faComments} />
+									Discussion
+								</span>
 							</Tab>
 						</TabList>
 
