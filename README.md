@@ -1,6 +1,11 @@
 # Projet d’interfaces riches
 
-Émilie Daniel et Florian Monfort
+## Contributeurs
+
+* Émilie Daniel : aucune expérience de React
+* Florian Monfort : bonne expérience avec React, mais surtout sur des petits projets
+
+Nous n’avons pas travaillé en <i>pair programming</i>.
 
 ## Démarrage
 
