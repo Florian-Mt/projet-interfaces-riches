@@ -14,27 +14,29 @@ type MapProps = {
 }
 
 const Map = ({className, changeTimePosition, currentChapterDuration, currentChapterStartTime, waypoints}: MapProps) => {
-	let currentCenter
-	if (currentChapterStartTime === null || currentChapterDuration == null) {
-		currentCenter = {
-			lat: DEFAULT_MAP_LATITUDE,
-			lng: DEFAULT_MAP_LONGITUDE,
-		}
+	let currentCenter = {
+		lat: DEFAULT_MAP_LATITUDE,
+		lng: DEFAULT_MAP_LONGITUDE,
 	}
-	else {
+	let currentZoom = 4
+
+	if (currentChapterStartTime !== null && currentChapterDuration !== null) {
 		const currentWaypoint = waypoints.find(waypoint => {
 			const waypointTs = Number(waypoint.timestamp)
 			return currentChapterStartTime <= waypointTs && waypointTs < currentChapterStartTime + currentChapterDuration
-		})!
+		})
 
-		currentCenter = {
-			lat: Number(currentWaypoint.lat),
-			lng: Number(currentWaypoint.lng),
+		if (currentWaypoint) {
+			currentCenter = {
+				lat: Number(currentWaypoint.lat),
+				lng: Number(currentWaypoint.lng),
+			}
+			currentZoom = 10
 		}
 	}
 
 	return <div className={classNames(className)}>
-		<MapContainer className="w-full h-full" center={currentCenter} zoom={13} scrollWheelZoom={true}>
+		<MapContainer className="w-full h-full" center={currentCenter} zoom={currentZoom} scrollWheelZoom={true}>
 			<TileLayer
 				attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
