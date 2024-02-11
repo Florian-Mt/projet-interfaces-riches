@@ -47,9 +47,9 @@ body {
 }
 
 .message {
-	@apply bg-white even:bg-neutral-100;
+	@apply bg-white even:bg-neutral-100 dark:bg-neutral-900 dark:even:bg-neutral-800;
 }
 
 .marker ~ .message {
-	@apply bg-neutral-100 even:bg-white;
+	@apply bg-neutral-100 even:bg-white dark:bg-neutral-800 dark:even:bg-neutral-900;
 }

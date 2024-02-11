@@ -57,7 +57,7 @@ const ChatMessage = ({className, currentTime, filmDuration, submitMessage}: Chat
 			<div className="flex flex-col gap-1">
 				<label htmlFor="userName">Nom</label>
 				<input
-					className="p-2 rounded-md border border-neutral-300"
+					className="p-2 rounded-md border border-neutral-300 dark:bg-neutral-800"
 					type="text"
 					id="userName"
 					required={true}
@@ -68,7 +68,7 @@ const ChatMessage = ({className, currentTime, filmDuration, submitMessage}: Chat
 			<div className="flex flex-col gap-1">
 				<label htmlFor="message">Message</label>
 				<textarea
-					className="p-2 rounded-md border border-neutral-300"
+					className="p-2 rounded-md border border-neutral-300 dark:bg-neutral-800"
 					id="message"
 					required={true}
 					value={message}
@@ -84,7 +84,7 @@ const ChatMessage = ({className, currentTime, filmDuration, submitMessage}: Chat
 				</div>
 				<div className="flex gap-2">
 					<input
-						className="grow p-2 rounded-md border border-neutral-300"
+						className="grow p-2 rounded-md border border-neutral-300 dark:bg-neutral-800"
 						id="moment"
 						step={1}
 						type="time"

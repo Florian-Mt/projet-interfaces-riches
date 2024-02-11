@@ -76,7 +76,7 @@ const ChatHistory = ({className, messages, changeTimePosition}: ChatHistoryProps
 			<div className="flex justify-between">
 				<div className="flex flex-col">
 					<p className="font-bold">{message.name}</p>
-					<p className="text-neutral-600 text-xs">Le {messageTime.toLocaleDateString()} à {messageTime.toLocaleTimeString()}</p>
+					<p className="text-neutral-600 dark:text-neutral-400 text-xs">Le {messageTime.toLocaleDateString()} à {messageTime.toLocaleTimeString()}</p>
 				</div>
 				{
 					message.moment && <button className="self-start anchor flex gap-1 justify-center items-center" onClick={() => changeTimePosition(message.moment!)}>
