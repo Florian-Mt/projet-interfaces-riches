@@ -38,8 +38,13 @@ const Chaptering = ({className, chapters, currentChapter, currentChapterDuration
 	return <nav className={classNames(className, "flex flex-col gap-1")}>
 		{chapters.map((chapter, key) => {
 			return <h2 key={chapter.pos} className={classNames("flex flex-col", {"font-bold": key === currentChapter})}>
-				<button className="anchor text-left" onClick={() => changeTimePosition(Number(chapters[key].pos))}>
-					{formatTime(Number(chapter.pos))} {chapter.title}
+				<button className="anchor flex justify-between" onClick={() => changeTimePosition(Number(chapters[key].pos))}>
+					<span>
+						{chapter.title}
+					</span>
+					<span>
+						{formatTime(Number(chapter.pos))}
+					</span>
 				</button>
 				{
 					key === currentChapter
